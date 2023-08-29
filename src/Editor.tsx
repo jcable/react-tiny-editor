@@ -44,11 +44,12 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) =
   const tools = parseTools(options ?? defaultTools)
 
   const onChangeToolbar = (commandId: string, value: string): undefined => {
-    console.log('onChangeToolbar', commandId, value, d.current)
+    // console.log('onChangeToolbar', commandId, value, d.current)
     if (d.current !== null) {
       d.current.focus()
-      console.log('execCommand', commandId, value)
+      // console.log('execCommand', commandId, value)
       execCommand(commandId, false, value)
+      updateToolbar()
     }
   }
 
@@ -83,8 +84,10 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) =
             }
           }
           break
+        case 'separator':
+          break
         default:
-          console.log('unknown tool', opt.tool)
+          console.log('unknown tool')
       }
     })
   }
