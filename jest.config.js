@@ -18,6 +18,11 @@ const config = {
   extensionsToTreatAsEsm: [
     '.ts', '.tsx'
   ],
+  globals: {
+    'ts-jest': {
+      tsConfig: 'tsconfig.test.json'
+    }
+  },
   transform: {
     '^.+\\.m?[tj]sx?$': [
       'ts-jest',
