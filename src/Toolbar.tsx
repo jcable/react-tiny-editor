@@ -21,12 +21,12 @@ const Toolbar: FunctionComponent<Props> = ({ options, state, onChange }: Props) 
         switch (opt.component) {
           case 'select':
           {
-            const { command, title, options, defaultValue } = opt
+            const { title, options, defaultValue } = opt
             return <Select
                 key={index} title={title}
                 defaultValue={defaultValue ?? ''} options={options ?? []}
                 value={typeof value === 'string' ? value : undefined}
-                onChange={(value) => { onChange(command ?? '', value) }}
+                onChange={(value) => { onChange(toolname, value) }}
               />
           }
           case 'button':
