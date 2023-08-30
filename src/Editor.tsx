@@ -49,7 +49,7 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) =
   }
 
   const handleChange = (e: any): void => {
-    console.log('handleChange', e)
+    // console.log('handleChange', e)
     updateToolbar()
     if (onChange != null) {
       onChange(fromdiv(e.target.value))
@@ -67,11 +67,17 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) =
   }
 
   const onChangeToolbar = (tool: string, value: string): undefined => {
-    console.log('onChangeToolbar', tool, value, d.current)
+    // console.log('onChangeToolbar', tool, value)
     const option = toolOptions[tool]
     if (d.current !== null) {
       d.current.focus()
-      console.log('execCommand', option.command, value)
+      // console.log('execCommand', option.command, value)
+      if (value === 'off->on') {
+        setTool(tool, true)
+      }
+      if (value === 'on->off') {
+        setTool(tool, false)
+      }
       execCommand(option.command, false, value)
     }
   }
