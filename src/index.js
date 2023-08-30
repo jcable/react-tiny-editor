@@ -5,7 +5,7 @@ import Editor from './Editor.js'
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function App (props) {
   return React.createElement(Editor, {
-    html: 'A <b>test</b> message',
+    html: 'A <strong>test</strong> message',
     onChange: (html) => { console.log('app on change', html) }
   })
 }

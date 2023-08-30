@@ -4,18 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface Props {
   title: string
+  tool: string
   children?: ReactNode
-  onClick: (commandId: string, target: any) => undefined
+  onClick: (tool: string, value: string) => undefined
   active?: boolean
   icon?: IconDefinition
 }
 
-const Button: FunctionComponent<Props> = ({ title, active, children, icon, onClick }: Props) => {
+const Button: FunctionComponent<Props> = ({ tool, title, active, children, icon, onClick }: Props) => {
   const className = '__toolbar-item' + (active === true ? ' active' : '')
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (event.target instanceof SVGElement) {
-      onClick(title, event.target.dataset.icon)
-    }
+    const button = event.currentTarget
+    onClick(tool, button.classList.contains('active') ? 'on->off' : 'off->on')
   }
   return <button type='button' title={title} className={className} onClick={handleClick}>
     {icon != null

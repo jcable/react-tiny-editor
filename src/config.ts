@@ -30,42 +30,39 @@ export const webSafeFontOptions = [
   { value: 'Brush Script MT', text: 'Cursive' }
 ]
 
-export interface SeparatorToolOption {
-  tool: 'separator'
-}
-
 export interface ButtonToolOption {
-  tool: 'button'
+  component: 'button'
+  tool: string
   title: string
   command: string
   icon?: IconDefinition
 }
 
 export interface SelectToolOption {
-  tool: 'select'
+  component: 'select'
+  tool: string
   title: string
   command: string
   options?: Array<{ value: string, text: string }>
   defaultValue?: string
 }
 
-type ToolOption = ButtonToolOption | SelectToolOption | SeparatorToolOption
+export type ToolOption = ButtonToolOption | SelectToolOption
 
 export const toolOptions: Record<string, ToolOption> = {
-  style: { command: 'formatBlock', tool: 'select', title: 'Styles', options: styleOptions, defaultValue: 'p' },
-  font: { command: 'fontName', tool: 'select', title: 'Font', options: fontOptions, defaultValue: 'serif' },
-  bold: { command: 'bold', tool: 'button', title: 'Bold', icon: faBold },
-  italic: { command: 'italic', tool: 'button', title: 'Italic', icon: faItalic },
-  underline: { command: 'underline', tool: 'button', title: 'Underline', icon: faUnderline },
-  justifyleft: { command: 'justifyleft', tool: 'button', title: 'Left align', icon: faAlignLeft },
-  justifycenter: { command: 'justifycenter', tool: 'button', title: 'Center align', icon: faAlignCenter },
-  justifyright: { command: 'justifyright', tool: 'button', title: 'Right align', icon: faAlignRight },
-  numlist: { command: 'insertorderedlist', tool: 'button', title: 'Numbered list', icon: faListOl },
-  bullist: { command: 'insertunorderedlist', tool: 'button', title: 'Bulleted list', icon: faListUl },
-  indent: { command: 'indent', tool: 'button', title: 'Increase indent', icon: faIndent },
-  outdent: { command: 'outdent', tool: 'button', title: 'Decrease indent', icon: faOutdent },
-  clear: { command: 'removeFormat', tool: 'button', title: 'Clear formatting', icon: faEraser },
-  '|': { tool: 'separator' }
+  style: { command: 'formatBlock', tool: 'style', component: 'select', title: 'Styles', options: styleOptions, defaultValue: 'p' },
+  font: { command: 'fontName', tool: 'font', component: 'select', title: 'Font', options: fontOptions, defaultValue: 'serif' },
+  bold: { command: 'bold', tool: 'bold', component: 'button', title: 'Bold', icon: faBold },
+  italic: { command: 'italic', tool: 'italic', component: 'button', title: 'Italic', icon: faItalic },
+  underline: { command: 'underline', tool: 'underline', component: 'button', title: 'Underline', icon: faUnderline },
+  justifyleft: { command: 'justifyleft', tool: 'justifyleft', component: 'button', title: 'Left align', icon: faAlignLeft },
+  justifycenter: { command: 'justifycenter', tool: 'justifycenter', component: 'button', title: 'Center align', icon: faAlignCenter },
+  justifyright: { command: 'justifyright', tool: 'justifyright', component: 'button', title: 'Right align', icon: faAlignRight },
+  numlist: { command: 'insertorderedlist', tool: 'numlist', component: 'button', title: 'Numbered list', icon: faListOl },
+  bullist: { command: 'insertunorderedlist', tool: 'bullist', component: 'button', title: 'Bulleted list', icon: faListUl },
+  indent: { command: 'indent', tool: 'indent', component: 'button', title: 'Increase indent', icon: faIndent },
+  outdent: { command: 'outdent', tool: 'outdent', component: 'button', title: 'Decrease indent', icon: faOutdent },
+  clear: { command: 'removeFormat', tool: 'clear', component: 'button', title: 'Clear formatting', icon: faEraser },
 }
 
 export const defaultTools = 'style font bold italic underline | justifyleft justifycenter justifyright | bullist numlist outdent indent | clear'

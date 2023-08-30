@@ -43,52 +43,46 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) =
 
   const tools = parseTools(options ?? defaultTools)
 
-  const onChangeToolbar = (commandId: string, value: string): undefined => {
-    // console.log('onChangeToolbar', commandId, value, d.current)
-    if (d.current !== null) {
-      d.current.focus()
-      // console.log('execCommand', commandId, value)
-      execCommand(commandId, false, value)
-      updateToolbar()
-    }
-  }
-
   const handleBlur: FocusEventHandler<HTMLDivElement> = (e) => {
     // console.log('editor handleBlur', e)
     if (onBlur != null) onBlur(e)
   }
 
+  const handleChange = (e: any): void => {
+    console.log('handleChange', e)
+    updateToolbar()
+    if (onChange != null) {
+      onChange(fromdiv(e.target.value))
+    }
+  }
+
+  const setTool = (tool: string, value: string | boolean): void => {
+    if (toolstate.has(tool)) {
+      const current = toolstate.get(tool)
+      if (current === value) {
+        return
+      }
+    }
+    setToolstate(new Map<string, boolean | string>([...toolstate, [tool, value]]))
+  }
+
+  const onChangeToolbar = (tool: string, value: string): undefined => {
+    console.log('onChangeToolbar', tool, value, d.current)
+    const option = toolOptions[tool]
+    if (d.current !== null) {
+      d.current.focus()
+      console.log('execCommand', option.command, value)
+      execCommand(option.command, false, value)
+    }
+  }
+
   const updateToolbar = (): void => {
     tools.forEach(item => {
       const opt = toolOptions[item]
-      switch (opt.tool) {
-        case 'select':
-          {
-            const { command } = opt
-            const cv = queryCommandValue(command)
-            const current = toolstate.get(item) ?? ''
-            // console.log('toolbar', item, command, cv, current)
-            if (current !== cv) {
-              setToolstate(new Map<string, boolean | string>([...toolstate, [item, cv]]))
-            }
-          }
-          break
-        case 'button':
-          {
-            const { command } = opt
-            const cs = queryCommandState(command)
-            const current = toolstate.get(item) ?? false
-            // console.log('toolbar', item, command, cs, current, [...toolstate])
-            if (current !== cs) {
-              setToolstate(new Map<string, boolean | string>([...toolstate, [item, cs]]))
-            }
-          }
-          break
-        case 'separator':
-          break
-        default:
-          console.log('unknown tool')
-      }
+      console.log('updateToolbar', item, opt)
+      const { command } = opt
+      const cv = queryCommandValue(command)
+      setTool(item, cv)
     })
   }
 
@@ -100,13 +94,6 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) =
   const handleClick = (e: any): void => {
     // console.log('click', e)
     updateToolbar()
-  }
-
-  const handleChange = (e: any): void => {
-    updateToolbar()
-    if (onChange != null) {
-      onChange(fromdiv(e.target.value))
-    }
   }
 
   useEffect(() => {
