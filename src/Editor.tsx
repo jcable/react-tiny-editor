@@ -80,9 +80,23 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) =
     tools.forEach(item => {
       const opt = toolOptions[item]
       console.log('updateToolbar', item, opt)
-      const { command } = opt
-      const cv = queryCommandValue(command)
-      setTool(item, cv)
+      if (opt == null) {
+        console.log('missing item in toolOptions', item)
+      } else {
+        switch (opt.component) {
+          case 'button': {
+            const { command } = opt
+            const c = queryCommandState(command)
+            setTool(item, c)
+          }
+            break
+          case 'select': {
+            const { command } = opt
+            const c = queryCommandValue(command)
+            setTool(item, c)
+          }
+        }
+      }
     })
   }
 
