@@ -7,6 +7,7 @@ src
 webpack.*.cjs
 CSSStub.js
 tsconfig.json
+tsconfig.test.json
 eslint.yml
 jest.config.js
 test
