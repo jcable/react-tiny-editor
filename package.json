@@ -1,6 +1,6 @@
 {
   "name": "@ogauk/react-tiny-editor",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A tiny HTML rich text editor for React",
   "type": "module",
   "main": "index.js",
@@ -55,7 +55,9 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0"
+  },
+  "optionalDependencies": {
     "sanitize-html": "^2.11.0"
   }
 }

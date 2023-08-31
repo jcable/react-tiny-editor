@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState, type FunctionComponent, type FocusEventHandler } from 'react'
-import sanitizeHtml from 'sanitize-html'
 import ContentEditable from './ContentEditable.js'
 import Toolbar from './Toolbar.js'
 import { defaultTools, toolOptions } from './config.js'
@@ -17,22 +16,34 @@ function parseTools (tools: string): string[] {
   return tools.split('|').map(section => ['|', ...section.split(/ +/)]).flat().filter(tool => tool !== '').slice(1)
 }
 
-export function todiv (html: string): string {
-  return sanitizeHtml(html, {
-    transformTags: {
-      strong: 'b',
-      em: 'i'
-    }
-  })
-}
+const elementmap1: Record<string, string> = { strong: 'b', em: 'i', '/': '/' }
+const elementmap2: Record<string, string> = { b: 'strong', i: 'em', '/': '/' }
 
-export function fromdiv (html: string): string {
-  return sanitizeHtml(html, {
-    transformTags: {
-      b: 'strong',
-      i: 'em'
-    }
-  })
+export let todiv = (html: string): string => html.replace(/<(\/?)(strong|em)>/g, (_, p1, p2) => `<${p1}${elementmap1[p2]}>`)
+export let fromdiv = (html: string): string => html.replace(/<(\/?)(b|i)>/g, (_, p1, p2) => `<${p1}${elementmap2[p2]}>`)
+
+try {
+  const sanitizeHtml = await import('sanitize-html')
+
+  todiv = (html: string): string => {
+    return sanitizeHtml.default(html, {
+      transformTags: {
+        strong: 'b',
+        em: 'i'
+      }
+    })
+  }
+
+  fromdiv = (html: string): string => {
+    return sanitizeHtml.default(html, {
+      transformTags: {
+        b: 'strong',
+        i: 'em'
+      }
+    })
+  }
+} catch (e) {
+  console.log('not sanitizing')
 }
 
 const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) => {
