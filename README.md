@@ -12,6 +12,12 @@ The toolbar is based directly on tiny-editor. The ContentEditable component is a
 npm install @ogauk/react-tiny-editor
 ```
 
+Optionally enable html sanitising of input and typed content:
+
+```
+npm install sanitize-html
+```
+
 ## How to use (Typescript)
 
 ```
