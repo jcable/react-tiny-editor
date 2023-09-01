@@ -2,27 +2,25 @@ import React from 'react'
 import { jest, test, expect } from '@jest/globals'
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import Editor, { fromdiv, todiv } from '../src/Editor.js'
+import { ReactTinyEditor } from '../src/ReactTinyEditor'
+import { ReactReallyTinyEditor } from '../src/ReactReallyTinyEditor'
 
 global.document.execCommand = jest.fn<() => boolean>()
 global.document.queryCommandState = jest.fn<() => boolean>()
 global.document.queryCommandValue = jest.fn<() => string>()
 
-test('todiv', () => {
-  expect(todiv('<strong>a</strong>')).toEqual('<b>a</b>')
-})
-
-test('fromdiv', () => {
-  expect(fromdiv('<b>a</b>')).toEqual('<strong>a</strong>')
-})
-
 test('editor renders', async () => {
-  render(<Editor html='Hello' onChange={() => { console.log('test') } } />)
+  render(<ReactTinyEditor html='Hello' onChange={() => { console.log('test') } } />)
+  expect(screen.getAllByRole<HTMLButtonElement>('button').length).toBe(11)
+})
+
+test('really tiny editor renders', async () => {
+  render(<ReactReallyTinyEditor html='Hello' onChange={() => { console.log('test') } } />)
   expect(screen.getAllByRole<HTMLButtonElement>('button').length).toBe(11)
 })
 
 test('editor on...', async () => {
-  render(<Editor html='Hello' options='style font | bold | italic' onChange={() => { console.log('test') } } />)
+  render(<ReactTinyEditor html='Hello' options='style font | bold | italic' onChange={() => { console.log('test') } } />)
   const div = await screen.findByText<HTMLDivElement>('Hello')
   fireEvent.focus(div)
   fireEvent.keyDown(div, { key: 'A', code: 'KeyA' })

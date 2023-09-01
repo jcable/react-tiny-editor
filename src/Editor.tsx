@@ -10,43 +10,15 @@ interface Props {
   html?: string
   onBlur?: (e: any) => void
   onChange?: (html: string) => void
+  fromdiv: (s: string) => string
+  todiv: (s: string) => string
 }
 
 function parseTools (tools: string): string[] {
   return tools.split('|').map(section => ['|', ...section.split(/ +/)]).flat().filter(tool => tool !== '').slice(1)
 }
 
-const elementmap1: Record<string, string> = { strong: 'b', em: 'i', '/': '/' }
-const elementmap2: Record<string, string> = { b: 'strong', i: 'em', '/': '/' }
-
-export let todiv = (html: string): string => html.replace(/<(\/?)(strong|em)>/g, (_, p1, p2) => `<${p1}${elementmap1[p2]}>`)
-export let fromdiv = (html: string): string => html.replace(/<(\/?)(b|i)>/g, (_, p1, p2) => `<${p1}${elementmap2[p2]}>`)
-
-try {
-  const sanitizeHtml = await import('sanitize-html')
-
-  todiv = (html: string): string => {
-    return sanitizeHtml.default(html, {
-      transformTags: {
-        strong: 'b',
-        em: 'i'
-      }
-    })
-  }
-
-  fromdiv = (html: string): string => {
-    return sanitizeHtml.default(html, {
-      transformTags: {
-        b: 'strong',
-        i: 'em'
-      }
-    })
-  }
-} catch (e) {
-  console.log('not sanitizing')
-}
-
-const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange }) => {
+const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange, todiv, fromdiv }) => {
   const [toolstate, setToolstate] = useState(new Map<string, boolean | string>())
   const text = useRef(todiv(html ?? ''))
   const d = useRef<HTMLDivElement>(null)
