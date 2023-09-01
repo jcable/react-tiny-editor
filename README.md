@@ -16,7 +16,7 @@ npm install @ogauk/react-tiny-editor
 
 ```
 import React, { type FC } from 'react'
-import ReactTinyEditor from '@ogauk/react-tiny-editor/lib/ReactTinyEditor'
+import ReactTinyEditor from '@ogauk/react-tiny-editor'
 
 const App: FC<null> = () => {
   return <ReactTinyEditor html='A <b>test</b> message' onChange={(html) => { console.log('app on change', html) }}/>
@@ -26,13 +26,13 @@ export default App
 ```
 If you want a smaller bundle and don't mind sanitising the html yourself you can:
 
-import ReactTinyEditor from '@ogauk/react-tiny-editor/lib/ReactReallyTinyEditor'
+import { ReactReallyTinyEditor as ReactTinyEditor } from '@ogauk/react-tiny-editor'
 
 ## How to use (Javascript)
 
 ```
 import React from 'react'
-import ReactTinyEditor from '@ogauk/react-tiny-editor/lib/ReactTinyEditor'
+import ReactTinyEditor from '@ogauk/react-tiny-editor'
 
 export default function App() {
   return <ReactTinyEditor html='A <b>test</b> message' onChange={(html) => { console.log('app on change', html) }}/>
