@@ -8,7 +8,7 @@
   "scripts": {
     "pretest": "eslint src",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
-    "build": "rm -r lib && tsc && cp src/index.css lib",
+    "build": "rm -rf lib && tsc && cp src/index.css lib",
     "start": "webpack-dev-server --open",
     "postversion": "git push && git push --tags && npm publish",
     "prepublish": "build"

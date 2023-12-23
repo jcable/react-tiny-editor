@@ -18,7 +18,7 @@ function parseTools (tools: string): string[] {
   return tools.split('|').map(section => ['|', ...section.split(/ +/)]).flat().filter(tool => tool !== '').slice(1)
 }
 
-const Editor: FunctionComponent = ({ options, html, onBlur, onChange, todiv, fromdiv }: Props) => {
+const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange, todiv, fromdiv }: Props) => {
   const [toolstate, setToolstate] = useState(new Map<string, boolean | string>())
   const text = useRef(todiv(html ?? ''))
   const d = useRef<HTMLDivElement>(null)
