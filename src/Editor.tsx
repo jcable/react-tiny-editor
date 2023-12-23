@@ -106,7 +106,7 @@ const Editor: FunctionComponent = ({ options, html, onBlur, onChange, todiv, fro
     return () => { isFirstRender.current = true }
   }, [])
 
-  return <div className='__editor_box'>
+  return <div className='__editor-box'>
     <Toolbar options={tools} state={toolstate} onChange={onChangeToolbar} />
     <ContentEditable innerRef={d} html={text.current} onBlur={handleBlur} onChange={handleChange}
       onKeyUp={handleKeys}
