@@ -89,6 +89,7 @@ const SimpleContentEditable: FC<Props> = ({ tagName, html, innerRef, tabIndex, c
   }
   return <div ref={ref}
   {...props}
+  className='__editor'
    onInput={emitChange}
    onBlur={props.onBlur ?? emitChange}
    onKeyUp={props.onKeyUp ?? emitChange}

@@ -18,7 +18,7 @@ function parseTools (tools: string): string[] {
   return tools.split('|').map(section => ['|', ...section.split(/ +/)]).flat().filter(tool => tool !== '').slice(1)
 }
 
-const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange, todiv, fromdiv }) => {
+const Editor: FunctionComponent = ({ options, html, onBlur, onChange, todiv, fromdiv }: Props) => {
   const [toolstate, setToolstate] = useState(new Map<string, boolean | string>())
   const text = useRef(todiv(html ?? ''))
   const d = useRef<HTMLDivElement>(null)
@@ -106,14 +106,13 @@ const Editor: FunctionComponent<Props> = ({ options, html, onBlur, onChange, tod
     return () => { isFirstRender.current = true }
   }, [])
 
-  return <>
+  return <div className='__editor_box'>
     <Toolbar options={tools} state={toolstate} onChange={onChangeToolbar} />
     <ContentEditable innerRef={d} html={text.current} onBlur={handleBlur} onChange={handleChange}
-      className='__editor'
       onKeyUp={handleKeys}
       onClick={handleClick}
     />
-  </>
+  </div>
 }
 
 export default Editor
